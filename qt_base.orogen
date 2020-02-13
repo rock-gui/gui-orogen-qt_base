@@ -1,0 +1,8 @@
+name "qt_base"
+
+task_context "Task" do
+    needs_configuration
+
+    needs_global_initializer :qt
+end
+
