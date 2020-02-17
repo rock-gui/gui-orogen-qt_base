@@ -4,10 +4,15 @@
 #define QT_BASE_TASK_TASK_HPP
 
 #include "qt_base/TaskBase.hpp"
+#include <QMutex>
+#include <QWaitCondition>
+
+class QObject;
 
 namespace qt_base {
     /*! \class Task
-     * \brief this task has no documentation, write one as a commentblock before the task_context statement in the orogen file
+     * \brief this task has no documentation, write one as a commentblock
+     *        before the task_context statement in the orogen file
      */
     class Task : public TaskBase
     {
@@ -18,6 +23,17 @@ namespace qt_base {
         friend class TaskBase;
 
     protected:
+        QObject* mExecutor = nullptr;
+        QMutex mExecutorLock;
+        QWaitCondition mExecutorSignal;
+
+        /** Execute the given function in the Qt main thread, waiting for its
+         * execution to finish
+         *
+         * @throw MethodInQtThreadFailed if the function throws, propagating the
+         *   error message
+         */
+        void processInQtThread(std::function<void()> f);
 
     public:
         /** TaskContext constructor for Task
@@ -42,6 +58,10 @@ namespace qt_base {
          */
         bool configureHook();
 
+        /** Method called during configureHook, but within the Qt thread
+         */
+        virtual void configureUI();
+
         /**
          * Hook called when the state machine transition from Stopped to Running
          *
@@ -51,6 +71,10 @@ namespace qt_base {
          * @return true if the transition is successful, false otherwise
          */
         bool startHook();
+
+        /** Method called during startHook, but within the Qt thread
+         */
+        virtual void startUI();
 
         /**
          * Hook called on trigger in the Running state
@@ -67,6 +91,10 @@ namespace qt_base {
          */
         void updateHook();
 
+        /** Method called during \c updateHook, but within the Qt thread
+         */
+        virtual void updateUI();
+
         /**
          * Hook called in the RuntimeError state, under the same conditions than
          * the updateHook
@@ -74,6 +102,10 @@ namespace qt_base {
          * Call recover() to go back in the Runtime state.
          */
         void errorHook();
+
+        /** Method called during \c errorHook, but within the Qt thread
+         */
+        virtual void errorUI();
 
         /**
          * Hook called when the component transitions out of the Running state
@@ -83,6 +115,10 @@ namespace qt_base {
          */
         void stopHook();
 
+        /** Method called during \c stopHook, but within the Qt thread
+         */
+        virtual void stopUI();
+
         /**
          * Hook called on all transitions to PreOperational
          *
@@ -90,6 +126,10 @@ namespace qt_base {
          * either from Stopped or Exception
          */
         void cleanupHook();
+
+        /** Method called during \c cleanupHook, but within the Qt thread
+         */
+        virtual void cleanupUI();
     };
 }
 

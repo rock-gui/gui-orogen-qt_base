@@ -1,8 +1,11 @@
-name "qt_base"
+# frozen_string_literal: true
 
-task_context "Task" do
+name 'qt_base'
+
+task_context 'Task' do
     needs_configuration
-
     needs_global_initializer :qt
 end
 
+task_context 'test::TestTask', subclasses: 'qt_base::Task' do
+end

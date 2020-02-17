@@ -1,17 +1,12 @@
 <package>
   <description brief="Base component that is aware of Qt threading requirements">
-  This project's component is meant to be used as a base class for others. It provides hooks matching the RTT hooks, but running in the Qt main thread, as well as a method
+  This project's component is meant to be used as a base class for others. It
+  provides hooks matching the RTT hooks, but running in the Qt main thread,
+  as well as a method to synchronously "call" other methods from the RTT thread,
+  to be run in the Qt thread
   </description>
   <author>Sylvain Joyeux/sylvain.joyeux@tidewise.io</author>
-  <license></license>
-  <url>http://</url>
-  <logo>http://</logo>
+  <license>LGPLv2+</license>
   <depend package="base/cmake" />
-  <!--
-   To add any dependencies use the depend tag
-  <depend package="dummy-dependency-0" />
-	...
-  <depend package="dummy-dependency-n-1" />
-  <depend package="dummy-dependency-n" />
-  -->
+  <test_depend package="tools/syskit" />
 </package>
