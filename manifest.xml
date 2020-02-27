@@ -9,4 +9,5 @@
   <license>LGPLv2+</license>
   <depend package="base/cmake" />
   <test_depend package="tools/syskit" />
+  <test_depend package="base/scripts" />
 </package>
