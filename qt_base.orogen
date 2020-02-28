@@ -9,3 +9,6 @@ end
 
 task_context 'test::TestTask', subclasses: 'qt_base::Task' do
 end
+
+task_context 'test::ErrorTestTask', subclasses: 'qt_base::Task' do
+end
