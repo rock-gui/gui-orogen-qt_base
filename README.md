@@ -23,3 +23,27 @@ Don't forget to add `gui/orogen/qt_base` to the package's manifest.xml
 ~~~
 <depend name="gui/orogen/qt_base" />
 ~~~
+
+## Running unit tests
+
+Unit tests in `test/` are Syskit-based. To run them, first enable the tests,
+update and build (from within the package's folder)
+
+~~~
+autoproj test enable .
+aup
+amake
+~~~
+
+Then, run the tests either with `autoproj` for automation:
+
+~~~
+autoproj test .
+~~~
+
+Or directly to be able to see the full test output:
+
+~~~
+acd -b .
+ctest -V
+~~~
