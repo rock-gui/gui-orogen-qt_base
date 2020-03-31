@@ -15,8 +15,13 @@ describe OroGen.qt_base.Task do
         plan.make_useless([agent, task])
         expect_execution.garbage_collect(true).to { emit agent.stop_event }
 
-        lines = File.readlines(log_file_path)
-                    .map { |line| line.chomp.split(': ') }
+        lines =
+            File
+            .readlines(log_file_path)
+            .find_all { |line| /^\w+: 0x/.match?(line) }
+            .map { |line| line.chomp.split(': ') }
+            .compact
+
         qt_app = lines.shift[1]
         expected_order = %w[configure start update stop cleanup]
                          .flat_map { |p| ["#{p}Hook", "#{p}UI", "#{p}Hook"] }
