@@ -48,7 +48,7 @@ describe OroGen.qt_base.Task do
 
     def compute_log_file_path(task)
         pid = task.execution_agent.pid
-        log_dir = task.execution_agent.log_dir
+        log_dir = task.execution_agent.log_dir || Roby.app.log_dir
         File.join(log_dir, "test_task-#{pid}.txt")
     end
 end
