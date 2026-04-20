@@ -2,6 +2,7 @@
 
 include(qt_baseTaskLib)
 ADD_LIBRARY(${QT_BASE_TASKLIB_NAME} SHARED
+    Init.cpp
     ${QT_BASE_TASKLIB_SOURCES})
 add_dependencies(${QT_BASE_TASKLIB_NAME}
     regen-typekit)
